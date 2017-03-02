@@ -1,0 +1,9 @@
+<template>
+	<div>
+		sad
+	</div>
+</template>
+<script>
+</script>
+<style>
+</style>
