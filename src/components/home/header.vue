@@ -15,8 +15,14 @@ export default {
     }
   },
   created () {
-    this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_111_17_1.service', { 'params': { p1: 'f83951d89634612981ce431ef60a34b5',
-      p2: '106338001',
+    const p2 = localStorage.getItem('userId')
+    const p1 = localStorage.getItem('sessionId')
+    const sex = localStorage.getItem('sex')
+    console.log(p1)
+    console.log(p2)
+    this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_111_17_1.service', { 'params': { p1: p1,
+      p2: p2,
+      a69: sex,
       m3: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
       m2: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
       m1: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
@@ -28,8 +34,12 @@ export default {
       m16: 1999,
       m18: 'com.yue.wap' }}).then((response) => {
         response.bodyText.then((response) => {
-          console.log(transResult(response).body.b179)
-          this.persions = transResult(response).body.b179
+          console.log(transResult(response))
+          if (transResult(response).code === 1002) {
+            this.$router.push('/login')
+          } else {
+            this.persions = transResult(response).body.b179
+          }
         })
       }, (err) => {
         console.log(err)

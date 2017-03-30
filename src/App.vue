@@ -1,15 +1,8 @@
 <template>
-  <v-home></v-home>
+    <router-view></router-view>
 </template>
 
 <script>
-  import home from './components/home/home.vue'
-  export default {
-    components: {
-      'v-home': home
-    }
-
-  }
 </script>
 
 <style>

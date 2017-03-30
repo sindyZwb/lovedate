@@ -1,19 +1,24 @@
 //计算font-size
-!function () {
-	document.addEventListener('DOMContentLoaded', calculate, false);
-    window.onresize =  function () {
-        console.log(1111)
-        calculate();
+!function() {
+    var html = document.documentElement;
+    var setFontSize = function() {
+        var width = html.offsetWidth;
+        if(width <= 750) {
+            html.style.fontSize = width / 7.5+ 'px';
+        } else {
+            html.style.fontSize = 100 + 'px';
+        }
+    };
+    var timer;
+    var setDelay = function() {
+        return clearTimeout(timer), (timer = setTimeout(setFontSize, 150));
     }
-    function calculate(){
-        var html = document.documentElement;
-        var windowWidth = html.clientWidth;
-        html.style.fontSize = windowWidth / 7.5 + 'px';
-        // 等价于html.style.fontSize = windowWidth / 640 * 100 + 'px';
-    }
-    
+    window.addEventListener('pageshow', function(evt) {
+        return evt.persisted && setDelay();
+    });
+    window.addEventListener('resize', setDelay);
+    setFontSize();
 }();
-
 var LS = localStorage;
 var debug = true;
 var baseUrl = location.origin;

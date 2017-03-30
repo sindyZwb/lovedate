@@ -46,7 +46,18 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
+.clearfix:after {
+  content: "\200B";
+  display: block;
+  height: 0;
+  clear: both;
+}
+input{
+    outline: none;
+}
+.overflow_hidden{
+    overflow: hidden
+}
 /* custom */
 a {
     color: #7e8c8d;

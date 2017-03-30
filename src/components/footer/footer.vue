@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<ul class="footer">
-			<li class="footer_btn selected"><router-link v-bind:to="{path:'index'}"><img src="./footer_img_red_0.png"/><div>缘分</div></router-link></li>
-			<li class="footer_btn"><router-link v-bind:to="{path:'message'}"><img src="./footer_img_grey_1.png" /><div>私信<div class="messageNum"  style="display:none">0</div></div></router-link></li>
-			<li class="footer_btn"><router-link v-bind:to="{path:'nearby'}"><img src="./footer_img_grey_2.png" /><div>附近</div></router-link></li>
-			<li class="footer_btn"><router-link v-bind:to="{path:'profile'}"><img src="./footer_img_grey_3.png" /><div>我</div></router-link></li>
+			<li class="footer_btn selected"><router-link v-bind:to="{path:'index'}"><img src="../../assets/images/footer_img_red_0.png"/><div>缘分</div></router-link></li>
+			<li class="footer_btn"><router-link v-bind:to="{path:'message'}"><img src="../../assets/images/footer_img_grey_1.png" /><div>私信<div class="messageNum"  style="display:none">0</div></div></router-link></li>
+			<li class="footer_btn"><router-link v-bind:to="{path:'nearby'}"><img src="../../assets/images/footer_img_grey_2.png" /><div>附近</div></router-link></li>
+			<li class="footer_btn"><router-link v-bind:to="{path:'profile'}"><img src="../../assets/images/footer_img_grey_3.png" /><div>我</div></router-link></li>
 		</ul>
 	</div>
 </template>

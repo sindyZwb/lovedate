@@ -7,16 +7,16 @@
 						<img class="head_img" :src="item.b57">
 						<div class="content">
 							<div class="name">{{item.b52}}</div>
-							<div class="info"><img src="./fate_age.png"><span>{{item.b1 ? item.b1 + "岁" : "保密"}}</span> <img src="./fate_height.png"><span>{{item.b33 ? item.b33 + "cm" : "保密"}}</span> <img src="./fate_position.png"><span>{{item.b67 ? item.b67 : "保密"}}</span></div>
+							<div class="info"><img src="../../assets/images/fate_age.png"><span>{{item.b1 ? item.b1 + "岁" : "保密"}}</span> <img src="../../assets/images/fate_height.png"><span>{{item.b33 ? item.b33 + "cm" : "保密"}}</span> <img src="../../assets/images/fate_position.png"><span>{{item.b67 ? item.b67 : "保密"}}</span></div>
 							<div class="motto"></div>
 						</div>
 					</div>
 					<div class="action">
 						<div class="btn_box">
-							<div class="love_btn"><img class="love_img" src="./love.png"><span>已喜欢</span></div>
+							<div class="love_btn"><img class="love_img" src="../../assets/images/love.png"><span>已喜欢</span></div>
 						</div>
 						<div class="btn_box">
-							<div class="greet_btn"><img class="greet_img" src="./greet.png"><span>已打招呼</span></div>
+							<div class="greet_btn"><img class="greet_img" src="../../assets/images/greet.png"><span>已打招呼</span></div>
 						</div>
 					</div>	
 				</router-link>	
@@ -34,11 +34,15 @@ export default {
     }
   },
   created () {
-    this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_111_17_1.service', { 'params': { p1: 'f83951d89634612981ce431ef60a34b5',
-      p2: '106338001',
-      m3: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
-      m2: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
-      m1: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
+    const p2 = localStorage.getItem('userId')
+    const p1 = localStorage.getItem('sessionId')
+    const sex = localStorage.getItem('sex')
+    this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_111_17_1.service', { 'params': { p1: p1,
+      p2: p2,
+      a69: sex,
+      m3: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
+      m2: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
+      m1: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
       m4: '爱约会',
       m5: 1000,
       m6: '1.0.0.0',
@@ -47,8 +51,12 @@ export default {
       m16: 1999,
       m18: 'com.yue.wap' }}).then((response) => {
         response.bodyText.then((response) => {
-          console.log(transResult(response).body.b180)
-          this.persions = transResult(response).body.b180
+          console.log(transResult(response))
+          if (transResult(response).code === 1002) {
+            this.$router.push('/login')
+          } else {
+            this.persions = transResult(response).body.b180
+          }
         })
       }, (err) => {
         console.log(err)
