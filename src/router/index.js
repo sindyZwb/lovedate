@@ -28,17 +28,22 @@ export default new Router({
       component: Home
     },
     {
-      path: '/',
+      path: '/index',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/message',
       name: 'message',
       component: message
     },
     {
-      path: '/',
+      path: '/nearby',
       name: 'nearby',
       component: nearby
     },
     {
-      path: '/',
+      path: '/profile',
       name: 'profile',
       component: profile
     },

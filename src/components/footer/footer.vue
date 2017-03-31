@@ -1,16 +1,45 @@
 <template>
-	<div>
-		<ul class="footer">
-			<li class="footer_btn selected"><router-link v-bind:to="{path:'index'}"><img src="../../assets/images/footer_img_red_0.png"/><div>缘分</div></router-link></li>
-			<li class="footer_btn"><router-link v-bind:to="{path:'message'}"><img src="../../assets/images/footer_img_grey_1.png" /><div>私信<div class="messageNum"  style="display:none">0</div></div></router-link></li>
-			<li class="footer_btn"><router-link v-bind:to="{path:'nearby'}"><img src="../../assets/images/footer_img_grey_2.png" /><div>附近</div></router-link></li>
-			<li class="footer_btn"><router-link v-bind:to="{path:'profile'}"><img src="../../assets/images/footer_img_grey_3.png" /><div>我</div></router-link></li>
-		</ul>
-	</div>
+  <div>
+    <ul class="footer">
+      <li class="footer_btn" :class="{selected: footerindex == 1}">
+        <router-link v-bind:to="{path:'index'}">
+          <img v-if="footerindex == 1" src="../../assets/images/footer_img_red_0.png"/>
+          <img v-else src="../../assets/images/footer_img_grey_0.png"/>
+          <div>缘分</div>
+        </router-link></li>
+      <li class="footer_btn" :class="{selected: footerindex == 2}">
+        <router-link v-bind:to="{path:'message'}">
+          <img v-if="footerindex == 2" src="../../assets/images/footer_img_red_1.png" />
+          <img v-else src="../../assets/images/footer_img_grey_1.png" />
+          <div>私信<div class="messageNum"  style="display:none">0</div></div>
+        </router-link>
+        </li>
+      <li class="footer_btn" :class="{selected: footerindex == 3}">
+        <router-link v-bind:to="{path:'nearby'}">
+          <img v-if="footerindex == 3" src="../../assets/images/footer_img_red_2.png" />
+          <img v-else src="../../assets/images/footer_img_grey_2.png" />
+          <div>附近</div>
+        </router-link>
+      </li>
+      <li class="footer_btn" :class="{selected: footerindex == 4}">
+        <router-link v-bind:to="{path:'profile'}">
+          <img v-if="footerindex == 4" src="../../assets/images/footer_img_red_3.png" />
+          <img v-else src="../../assets/images/footer_img_grey_3.png" />
+          <div>我</div>
+        </router-link>
+        </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-	export default {}
+  export default {
+    props: {
+      footerindex: {
+        type: Number
+      }
+    }
+  }
 </script>
 
 <style>
@@ -38,13 +67,13 @@
     text-align: center;
     color: #aaaaaa;
 }
-.footer .footer_btn.selected{
+.footer .footer_btn.selected a{
 	color: #e43f3f;
 }
 .footer .footer_btn img{
-	width: 0.48rem;
-    height: 0.48rem;
-    display: block;
-    margin: auto;
+  width: 0.48rem;
+  height: 0.48rem;
+  display: block;
+  margin:0 auto .05rem;
 }
 </style>

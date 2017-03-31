@@ -7,7 +7,7 @@
 						<img class="head_img" :src="item.b57">
 						<div class="content">
 							<div class="name">{{item.b52}}</div>
-							<div class="info"><img src="../../assets/images/fate_age.png"><span>{{item.b1 ? item.b1 + "岁" : "保密"}}</span> <img src="../../assets/images/fate_height.png"><span>{{item.b33 ? item.b33 + "cm" : "保密"}}</span> <img src="../../assets/images/fate_position.png"><span>{{item.b67 ? item.b67 : "保密"}}</span></div>
+							<div class="info"><img src="../../assets/images/fate_age.png"><span>{{item.b1 ? item.b1 + "岁" : "保密"}}</span> <img src="../../assets/images/fate_height.png"><span>{{item.b33 ? item.b33 + "cm" : "保密"}}</span> <img src="../../assets/images/fate_position.png"><span v-if="item.b67">{{item.b67 | filterProvince}}</span><span v-else>保密</span></div>
 							<div class="motto"></div>
 						</div>
 					</div>
@@ -26,11 +26,23 @@
 </template>
 
 <script>
+import province from '../../common/data/province.json'
 import {transResult} from '../../common/js/transresult'
 export default {
   data () {
     return {
       persions: []
+    }
+  },
+  filters: {
+    filterProvince: function (id) {
+      var returnName = ''
+      province.body.forEach(function (value, index) {
+        if (id === value.provinceId) {
+          returnName = value.provinceName
+        }
+      })
+      return returnName
     }
   },
   created () {
@@ -70,7 +82,6 @@ export default {
 .fate_person_list{
 	list-style: none;
 	margin-top: 0.4rem;
-	padding:  0 .2rem;
 }
 .fate_person_list .person_item{
 	font-size: 0;

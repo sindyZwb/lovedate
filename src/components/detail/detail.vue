@@ -10,7 +10,7 @@
         <div class="age_height_education"><span class="age">{{persionInfo.b1 ? persionInfo.b1 + '岁' : ''}}</span><span class="height">{{persionInfo.b33 ? persionInfo.b33 +'cm':''}}</span>
           <span class="education">{{persionInfo.b88 ? persionInfo.b88 + 'kg' :''}}</span>
         </div>
-        <div class="address"><span class="province">{{persionInfo.b67}}</span><span class="city">{{persionInfo.b9}}</span></div>
+        <div class="address"><span class="province">{{persionInfo.b67 | filterProvince }}</span><span class="city">{{persionInfo.b9 | filterCity(persionInfo.b67)}}</span></div>
       </div>
     </div>
     <ul class="connect_btns">
@@ -45,10 +45,10 @@
       </div>
     </div>
     <div class="tab-header">
-      <div class="tab-list active">基本信息</div>
-      <div class="tab-list">私密信息</div>
+      <div class="tab-list" :class="{active: tabIndex == 1}" @click="tab(1)">基本信息</div>
+      <div class="tab-list" :class="{active: tabIndex == 2}" @click="tab(2)">私密信息</div>
     </div>
-    <ul class="classify_infos" style="display: block;">
+    <ul class="classify_infos"  v-show="tabIndex == 1" >
       <li class="classify_item" v-if="persionInfo.b17">
         <ul class="detail_lists">
           <li class="detail_header"><div class="front"></div>自我介绍</li>
@@ -70,7 +70,7 @@
           <li class="detail_item" v-if="persionInfo.b67 && persionInfo.b9">
             <img src="../../assets/images/info_address.png">
             <div class="key">居住地</div>
-            <div class="value">{{persionInfo.b67}}{{persionInfo.b9}}</div>
+            <div class="value">{{persionInfo.b67 | filterProvince }}{{persionInfo.b9 | filterCity(persionInfo.b67) }}</div>
           </li>
           <li class="detail_item" v-if="persionInfo.b88">
             <img src="../../assets/images/info_weight.png">
@@ -80,7 +80,8 @@
           <li class="detail_item" v-if="persionInfo.b62">
             <img src="../../assets/images/info_job.png">
             <div class="key">职业</div>
-            <div class="value">{{persionInfo.b62?persionInfo.b62:'学生'}}</div>
+            <div class="value" v-if="persionInfo.b62">{{persionInfo.b62 | filterEnum("profession_personal")}}</div>
+            <div class="value" v-else>保密</div>
           </li>
           <li class="detail_item" v-if="persionInfo.b87 && persionInfo.b86">
             <img src="../../assets/images/info_income.png">
@@ -98,10 +99,10 @@
             <div class="key">年龄范围</div>
             <div class="value">{{friendsStandard.b1 ? friendsStandard.b1+'岁':'保密'}}</div>
           </li>
-          <li class="detail_item" v-if="friendsStandard.b67 || riendsStandard.b9">
+          <li class="detail_item" v-if="friendsStandard.b67 || friendsStandard.b9">
             <img src="../../assets/images/info_address_to.png">
             <div class="key">居住地</div>
-            <div class="value">{{friendsStandard.b67 ? friendsStandard.b67 : ""}}{{friendsStandard.b9 ? friendsStandard.b9 : ''}}</div>
+            <div class="value"><b v-if="friendsStandard.b67">{{friendsStandard.b67 | filterProvince}}</b><b v-if="friendsStandard.b69">{{friendsStandard.b69 | filterCity(friendsStandard.b67)}}</b></div>
           </li>
           <li class="detail_item"  v-if="friendsStandard.b33">
             <img src="../../assets/images/info_height_to.png">
@@ -111,7 +112,8 @@
           <li class="detail_item"  v-if="friendsStandard.b19">
             <img src="../../assets/images/info_education_to.png">
             <div class="key">学历</div>
-            <div class="value">{{friendsStandard.b19}}</div>
+            <div class="value" v-if="persionInfo.b19">{{persionInfo.b19 | filterEnum("educationLevel")}}</div>
+            <div class="value" v-else>保密</div>
           </li>
           <li class="detail_item"  v-if="friendsStandard.b85">
             <img src="../../assets/images/info_income_to.png">
@@ -121,11 +123,140 @@
         </ul>
       </li>
     </ul>
+    <ul class="classify_infos"  v-show="tabIndex == 2" >
+      <li class="classify_item">
+        <ul class="detail_lists">
+          <li class="detail_header">
+            <div class="front"></div>秘密照
+          </li>
+          <li class="detail-albums">
+            <div class="albums J_albumsPrivate albums-private clearfix" v-if="albumsPrivate && albumsPrivate.length > 0">
+              <div class="albums-wrapper">
+                <div class="albums-item" v-for="item in albumsPrivate">
+                  <img :src="item.b60"> 
+                </div>
+              </div>
+            </div>
+            <div class="no-photo" v-else>
+              Ta有点腼腆，还没上传私密照片哦~
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="classify_item">
+        <ul class="detail_lists">	
+          <li class="detail_header">
+            <div class="front"></div>秘密信息
+          </li>
+          <li class="detail_item">
+            <div v-if="!isVip">
+              <router-link to="/profilevipprovilege">
+                <img src="../../assets/images/info_time.png">
+                <div class="key">最近上线时间</div>
+                <div class="value"><span>查看</span></div>
+              </router-link>
+            </div>
+            <div v-else>
+                <img src="../../assets/images/info_time.png">
+                <div class="key">最近上线时间</div>
+                <div class="value">{{persionInfo.b44}}</div>
+            </div>
+          </li>
+          <li class="detail_item">
+            <img src="../../assets/images/info_goal.png">
+            <div class="key">交友目的</div>
+            <div class="value" v-if="persionInfo.b194">{{persionInfo.b194 | filterEnum("dating_purpose") }}</div>
+            <div class="value" v-else>保密</div>
+          </li>
+          <li class="detail_item">
+            <img src="../../assets/images/info_lovevalue.png">
+            <div class="key">恋爱观</div>
+            <div class="value" v-if="persionInfo.b195">{{persionInfo.b195 | filterEnum("indulged") }}</div>
+            <div class="value" v-else>保密</div>
+          </li>
+          <li class="detail_item">
+            <img src="../../assets/images/info_firstmeet.png">
+            <div class="key">首次希望见面</div>
+            <div class="value" v-if="persionInfo.b196">{{persionInfo.b196 | filterEnum("meet_place") }}</div>
+            <div class="value" v-else>保密</div>
+          </li>
+          <li class="detail_item">
+            <img src="../../assets/images/info_loveaddress.png">
+            <div class="key">喜欢爱爱的地点</div>
+            <div class="value" v-if="persionInfo.b197">{{persionInfo.b197 | filterEnum("love_place") }}</div>
+            <div class="value" v-else>保密</div>
+          </li>
+        </ul>
+      </li>
+      <li class="classify_item" id="weixin">
+        <ul class="detail_lists">
+          <li class="detail_header">
+            <div class="front"></div>联系方式
+          </li>
+          <li class="detail_item">
+            <div v-if="!isVip">
+              <router-link to="/profilevipprovilege">
+                <img src="../../assets/images/info_qq.png">
+                <div class="key">QQ</div>
+                <div class="value">
+                  <span>查看</span>
+                </div>
+              </router-link>
+            </div>
+            <div v-else>
+              <img src="../../assets/images/info_qq.png">
+              <div class="key">QQ</div>
+              <div class="value">
+                {{persionInfo.b158 == 1 && persionInfo.b156 ? persionInfo.b156 : "保密" }}
+              </div>
+            </div>  
+          </li>
+          <li class="detail_item">
+            <div v-if="!isVip">
+              <router-link to="/profilevipprovilege">
+                <img src="../../assets/images/info_wechat.png">
+                <div class="key">微信</div>
+                <div class="value">
+                  <span>查看</span>
+                </div>
+              </router-link>
+            </div>
+            <div v-else>
+              <img src="../../assets/images/info_wechat.png">
+              <div class="key">微信</div>
+              <div class="value">
+                {{persionInfo.b159 == 1 && persionInfo.b157 ? persionInfo.b157 : "保密"}}
+              </div>
+            </div>
+          </li>
+          <li class="detail_item">
+            <div v-if="isVip">
+              <router-link to="/profilevipprovilege">
+                <img src="../../assets/images/info_phone.png">
+                <div class="key">手机</div>
+                <div class="value">
+                  <span>查看</span>
+                </div>
+              </router-link>
+            </div>
+            <div v-else>
+              <img src="../../assets/images/info_phone.png">
+              <div class="key">手机</div>
+              <div class="value">
+                {{persionInfo.b202 ? persionInfo.b202 : "保密" }}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import {transResult} from '../../common/js/transresult'
+import province from '../../common/data/province.json'
+import enumJson from '../../common/data/enum.json'
 export default {
   data () {
     return {
@@ -135,15 +266,63 @@ export default {
       albums: [],
       gifts: [],
       voiceIntro: '',
-      friendsStandard: ''
+      friendsStandard: '',
+      tabIndex: 1,
+      albumsPrivate: [],
+      isVip: false
+    }
+  },
+  filters: {
+    filterCity: function (cId, pId) {
+      var returnName = ''
+      console.log(cId, pId)
+      province.body.forEach(function (value, index) {
+        if (pId === value.provinceId) {
+          (value.cityList).forEach(function (v, i) {
+            if (cId === v.cityId) {
+              returnName = v.cityName
+            }
+          })
+        }
+      })
+      return returnName
+    },
+    filterProvince: function (id) {
+      var returnName = ''
+      province.body.forEach(function (value, index) {
+        if (id === value.provinceId) {
+          returnName = value.provinceName
+        }
+      })
+      return returnName
+    },
+
+    filterEnum: function (code, key) {
+      var returnValue = ''
+      enumJson.body.forEach(function (value, index) {
+        if (key === value.b20) {
+          value.b98.forEach(function (v, i) {
+            if (code.toString() === v.b22) {
+              returnValue = v.b21
+            }
+          })
+        }
+      })
+      return returnValue
     }
   },
   methods: {
     greet: function () {
       console.log(this.personId)
+    },
+    tab: function (index) {
+      console.log(111)
+      this.tabIndex = index
     }
   },
   created () {
+    console.log(province)
+    console.log(enumJson)
     console.log(this.$route.query)
     const p2 = this.$route.query.id
     const p1 = localStorage.getItem('sessionId')
@@ -173,6 +352,7 @@ export default {
             this.gifts = data.b250
             this.voiceIntro = data.b221
             this.friendsStandard = data.b114
+            this.albumsPrivate = data.b237
           }
         })
       }, (err) => {
@@ -506,21 +686,21 @@ export default {
 	background-size: cover;
 }
 
-.key {
+.detail_item .key {
 	font-size: .26rem;
 	color: #aaaaaa;
 	float: left;
 	margin-left: .1rem;
 }
 
-.value {
+.detail_item  .value {
 	font-size: .30rem;
 	color: #ffffff;
 	float: right;
 	margin-right: .2rem;
 }
 
-.value span {
+.detail_item  .value span {
 	color: #fff;
 	background: #e43f3f;
 	padding: .1rem .1rem;
@@ -529,7 +709,7 @@ export default {
 	display: inline-block;
 }
 
-.front {
+.detail_header .front {
 	width: .04rem;
 	height: .24rem;
 	background: #e43f3f;
