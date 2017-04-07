@@ -318,46 +318,55 @@ export default {
     tab: function (index) {
       console.log(111)
       this.tabIndex = index
+    },
+    fetchData: function () {
+      console.log(province)
+      console.log(enumJson)
+      console.log(this.$route)
+      console.log(this.$route.query)
+      const p2 = this.$route.query.id
+      const p1 = localStorage.getItem('sessionId')
+      this.personId = p2
+      this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_108_13_1.service', { 'params': { p1: p1,
+        p2: p2,
+        m3: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
+        m2: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
+        m1: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
+        m4: '爱约会',
+        m5: 1000,
+        m6: '1.0.0.0',
+        m7: 3,
+        m11: '',
+        m16: 1999,
+        m18: 'com.yue.wap' }}).then((response) => {
+          response.bodyText.then((response) => {
+            const res = transResult(response)
+            console.log(res)
+            if (res.code === 1002) {
+              this.$router.push('/login')
+            } else {
+              const data = res.body
+              if (data) {
+                this.persionInfo = data.b112
+                this.isLove = data.b116
+                this.albums = data.b113
+                this.gifts = data.b250
+                this.voiceIntro = data.b221
+                this.friendsStandard = data.b114
+                this.albumsPrivate = data.b237
+              }
+            }
+          })
+        }, (err) => {
+          console.log(err)
+        })
     }
   },
+  watch: {
+    '$route': 'fetchData'
+  },
   created () {
-    console.log(province)
-    console.log(enumJson)
-    console.log(this.$route.query)
-    const p2 = this.$route.query.id
-    const p1 = localStorage.getItem('sessionId')
-    this.personId = p2
-    this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_108_13_1.service', { 'params': { p1: p1,
-      p2: p2,
-      m3: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
-      m2: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
-      m1: 'f2db3f54-70e2-426c-b4da-ad70ab479e14',
-      m4: '爱约会',
-      m5: 1000,
-      m6: '1.0.0.0',
-      m7: 3,
-      m11: '',
-      m16: 1999,
-      m18: 'com.yue.wap' }}).then((response) => {
-        response.bodyText.then((response) => {
-          const res = transResult(response)
-          console.log(res)
-          if (res.code === 1002) {
-            this.$router.push('/login')
-          } else {
-            const data = res.body
-            this.persionInfo = data.b112
-            this.isLove = data.b116
-            this.albums = data.b113
-            this.gifts = data.b250
-            this.voiceIntro = data.b221
-            this.friendsStandard = data.b114
-            this.albumsPrivate = data.b237
-          }
-        })
-      }, (err) => {
-        console.log(err)
-      })
+    this.fetchData()
   }
 }
 </script>

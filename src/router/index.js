@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import detail from '../components/detail/detail'
-import message from '../components/message/message'
-import nearby from '../components/nearby/nearby'
-import profile from '../components/profile/profile'
-import Home from '../components/home/home'
+import Detail from '../components/detail/Detail'
+import Message from '../components/message/Message'
+import Nearby from '../components/nearby/Nearby'
+import Profile from '../components/profile/Profile'
+import Home from '../components/home/Home'
 import Login from '../components/login/Login'
 import LoginAccout from '../components/login/LoginAccout'
+import Loveme from '../components/profile/Loveme'
+import Profilevisiter from '../components/profile/Profilevisiter'
+import Profilelover from '../components/profile/Profilelover'
+import Information from '../components/profile/Information'
+import Feedback from '../components/profile/Feedback'
+import About from '../components/profile/About'
+import Profilephone from '../components/profile/Profilephone'
 
 Vue.use(Router)
 
@@ -35,22 +42,57 @@ export default new Router({
     {
       path: '/message',
       name: 'message',
-      component: message
+      component: Message
     },
     {
       path: '/nearby',
       name: 'nearby',
-      component: nearby
+      component: Nearby
     },
     {
       path: '/profile',
       name: 'profile',
-      component: profile
+      component: Profile
     },
     {
       path: '/detail',
       name: 'detail',
-      component: detail
+      component: Detail
+    },
+    {
+      path: '/profileloveme',
+      name: 'loveme',
+      component: Loveme
+    },
+    {
+      path: '/profilevisiter',
+      name: 'profilevisiter',
+      component: Profilevisiter
+    },
+    {
+      path: '/profilelover',
+      name: 'profilelover',
+      component: Profilelover
+    },
+    {
+      path: '/information',
+      name: 'information',
+      component: Information
+    },
+    {
+      path: '/feedback',
+      name: 'feedback',
+      component: Feedback
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    },
+    {
+      path: '/profilephone',
+      name: 'profilephone',
+      component: Profilephone
     }
   ]
 })

@@ -18,7 +18,7 @@
       <div class="profile_album">
         <ul class="ablum_list">
           <li class="addImg"><img src="../../assets/images/add_img.png"></li>
-          <li class="ablum_item" v-for="item in ablumList"><img :src="item.b58"></li>
+          <li class="ablum_item" v-for="(item,index) in ablumList" @click="viewImg(index,ablumList)" :data-index="index"><img :src="item.b58"></li>
         </ul>
       </div>
       <div class="profile_classify">
@@ -149,12 +149,14 @@
         </div>
       </div>
     </div>
+    <Albulmbig :albulmbigoptions="albulmbigoptions"></Albulmbig>
     <v-footer :footerindex = "4"></v-footer>
   </div>
 </template>
 
 <script>
-  import footer from '../footer/footer.vue'
+  import Footer from '../footer/Footer.vue'
+  import Albulmbig from '../albulmbig/Albulmbig.vue'
   import {transResult} from '../../common/js/transresult'
   export default {
     props: {
@@ -163,19 +165,36 @@
       }
     },
     components: {
-      'v-footer': footer
+      'v-footer': Footer,
+      Albulmbig
     },
     data () {
       return {
         'persionInfo': '',
         'ablumList': [],
         'visiterNum': 0,
-        'vipTime': ''
+        'vipTime': '',
+        'albulmbigoptions': {}
       }
     },
     filters: {
       toKilUint: function (value) {
         return value ? (value / 1000).toFixed(1) > 0.1 ? (value / 1000).toFixed(1) : '0.1' : '0.1'
+      }
+    },
+    methods: {
+      viewImg (index, imgList) {
+        let obj = {}
+        obj['isShow'] = true
+        obj['initialSlide'] = index
+        obj['imgList'] = imgList
+        obj['delFn'] = this.delImg
+        obj['showDel'] = true
+        this.albulmbigoptions = obj
+        console.log(this.albulmbigoptions)
+      },
+      delImg () {
+        console.log('del')
       }
     },
     created () {

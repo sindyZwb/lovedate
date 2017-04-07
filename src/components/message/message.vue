@@ -35,11 +35,11 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import footer from '../footer/footer.vue'
+  import Footer from '../footer/Footer.vue'
   import {transResult} from '../../common/js/transresult'
   export default {
     components: {
-      'v-footer': footer
+      'v-footer': Footer
     },
     props: {
       footerindex: {
@@ -49,11 +49,6 @@
     data () {
       return {
         'messagePersonList': []
-      }
-    },
-    filters: {
-      toKilUint: function (value) {
-        return value ? (value / 1000).toFixed(1) > 0.1 ? (value / 1000).toFixed(1) : '0.1' : '0.1'
       }
     },
     created () {
@@ -134,7 +129,7 @@
   }
 </script>
 <style>
-/*****************zhangfuhang*********************/
+
 .mesage_person_list .person_item{
 	padding-top: 0.2rem;
     height: 1.5rem;

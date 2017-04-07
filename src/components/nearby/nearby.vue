@@ -43,11 +43,11 @@
 </template>
 
 <script>
-  import footer from '../footer/footer.vue'
+  import Footer from '../footer/Footer.vue'
   import {transResult} from '../../common/js/transresult'
   export default {
     components: {
-      'v-footer': footer
+      'v-footer': Footer
     },
     props: {
       footerindex: {

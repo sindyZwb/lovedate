@@ -96,6 +96,7 @@ export default {
 	height: 2rem;
 	border-radius: 0.1rem;
 	float: left;
+	margin-left: .2rem;
 }
 
 
@@ -103,7 +104,7 @@ export default {
 	width: auto;
 	height: 2rem;
 	color: #ffffff;
-	margin-left: 2.2rem;
+	margin-left: 2.5rem;
 }
 .fate_person_list .name{
 	font-size: 0.32rem;

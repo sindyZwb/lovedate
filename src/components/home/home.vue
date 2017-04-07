@@ -9,7 +9,7 @@
 <script>
   import header from './header.vue'
   import list from './list.vue'
-  import footer from '../footer/footer.vue'
+  import Footer from '../footer/Footer.vue'
   export default {
     props: {
       footerindex: {
@@ -19,7 +19,7 @@
     components: {
       'v-header': header,
       'v-list': list,
-      'v-footer': footer
+      'v-footer': Footer
     }
   }
 </script>
