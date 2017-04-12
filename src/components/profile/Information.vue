@@ -18,7 +18,6 @@
                 <span class="value J_password">{{password}}</span>
             </li>
         </ul>
-        <Toast></Toast>
     </div>
 </template>
 <script>

@@ -4,7 +4,7 @@
           <div class="J_back" @click="back">
             <span class="back"></span>
             <span class="title">返回</span>
-          </div>			
+          </div>
           
           关于我们
         </div>

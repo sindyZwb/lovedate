@@ -42,6 +42,7 @@
     watch: {
       albulmbigoptions (value, oldValue) {
         console.log(value)
+        this.swiperOptionIn.initialSlide = this.albulmbigoptions.initialSlide
       }
     },
     created () {

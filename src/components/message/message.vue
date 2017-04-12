@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="page page_message ">
+    <div class="page page_message mesage_person_list">
       <ul v-if="messagePersonList && messagePersonList.length > 0">
         <li class="person_item" v-for="item in messagePersonList" :data-id="item.b77"  :data-robot="item.b216 == 1 ? true : false">
-          <router-link v-bind:to="{path: 'detail', query: {id: item.b80, isrobot: item.b216}}">
+          <router-link v-bind:to="{path: 'detail', query: {id: item.b77, isrobot: item.b216}}">
             <div class="line_box_wrrap">
               <div class="line_box_Margin_left">
                 <div class="box">
@@ -25,7 +25,7 @@
           </router-link>
         </li>
       </ul>
-      <div class="message_none" v-else>
+      <div class="message_none" v-else-if="messagePersonList.length < 0 && !loading">
         <img src="../../assets/images/message_none.png">
         <div class="none_hint">您还没有消息哦~</div>
         <div class="fill_btn"><a href="./profile/profileinfo.html">完善资料试试</a></div>
@@ -48,7 +48,8 @@
     },
     data () {
       return {
-        'messagePersonList': []
+        'messagePersonList': [],
+        'loading': true
       }
     },
     created () {
@@ -96,7 +97,7 @@
                       })
                       if (message) {
                         jsonData['p2'] = value.b25
-                        this.$http.get('http://192.168.0.122:8080/lp-search-msc/f_108_13_1.service', { 'params': jsonData }).then((response) => {
+                        this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_108_13_1.service', { 'params': jsonData }).then((response) => {
                           response.bodyText.then((persionResponse) => {
                             const persionRes = transResult(persionResponse)
                             if (persionRes.code === 1002) {
@@ -106,16 +107,19 @@
                               message['b52'] = persionData.b112.b52
                               message['b57'] = persionData.b112.b57
                               this.messagePersonList.push(message)
+                              this.loading = false
                             }
                           })
                         }, (err) => {
                           console.log(err)
+                          this.loading = false
                         })
                       }
                     }
                   })
                 }, (err) => {
                   console.log(err)
+                  this.loading = false
                 })
               })
             }
@@ -123,6 +127,7 @@
         })
       }, (err) => {
         console.log(err)
+        this.loading = false
       })
     }
 
@@ -177,6 +182,7 @@
 	/*display: inline-block;*/
 	/*vertical-align: top;*/
 	float: left;
+  margin-left: .2rem;
 }
 .mesage_person_list .content{
 	margin-left: 0.2rem;
@@ -190,12 +196,12 @@
 .mesage_person_list .name{
 	font-size: 0.32rem;
 	height: .32rem;
+  margin-top: 0;
 }
 .mesage_person_list .info{
-	margin-top: 0.2rem;
-	font-size: 0.28rem;
-	height: .5rem;
-	display: inline-block;
+    margin-top: 0.2rem;
+    font-size: 0.28rem;
+    height: .5rem;
     width: 4rem;
     white-space: nowrap;
     overflow: hidden;

@@ -45,34 +45,43 @@ export default {
       return returnName
     }
   },
-  created () {
-    const p2 = localStorage.getItem('userId')
-    const p1 = localStorage.getItem('sessionId')
-    const sex = localStorage.getItem('sex')
-    this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_111_17_1.service', { 'params': { p1: p1,
-      p2: p2,
-      a69: sex,
-      m3: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
-      m2: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
-      m1: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
-      m4: '爱约会',
-      m5: 1000,
-      m6: '1.0.0.0',
-      m7: 3,
-      m11: '',
-      m16: 1999,
-      m18: 'com.yue.wap' }}).then((response) => {
-        response.bodyText.then((response) => {
-          console.log(transResult(response))
-          if (transResult(response).code === 1002) {
-            this.$router.push('/login')
-          } else {
-            this.persions = transResult(response).body.b180
-          }
+  methods: {
+    fetchData () {
+      const p2 = localStorage.getItem('userId')
+      const p1 = localStorage.getItem('sessionId')
+      const sex = localStorage.getItem('sex')
+      this.$http.get('http://192.168.0.122:8080/lp-bus-msc/f_111_17_1.service', { 'params': { p1: p1,
+        p2: p2,
+        a69: sex,
+        m3: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
+        m2: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
+        m1: 'f2db3f53-70e2-426c-b4da-ad70ab479e14',
+        m4: '爱约会',
+        m5: 1000,
+        m6: '1.0.0.0',
+        m7: 3,
+        m11: '',
+        m16: 1999,
+        m18: 'com.yue.wap' }}).then((response) => {
+          response.bodyText.then((response) => {
+            console.log(transResult(response))
+            if (transResult(response).code === 1002) {
+              this.$router.push('/login')
+            } else {
+              this.persions = transResult(response).body.b180
+            }
+          })
+        }, (err) => {
+          console.log(err)
         })
-      }, (err) => {
-        console.log(err)
-      })
+    }
+  },
+  watch: {
+    // 如果路由有变化，会再次执行该方法
+    // '$route': 'fetchData'
+  },
+  created () {
+    this.fetchData()
   }
 }
 </script>
@@ -82,6 +91,7 @@ export default {
 .fate_person_list{
 	list-style: none;
 	margin-top: 0.4rem;
+	padding-bottom: .98rem;
 }
 .fate_person_list .person_item{
 	font-size: 0;

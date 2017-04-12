@@ -61,6 +61,7 @@ export default {
                 localStorage.setItem('userPassword', password)
                 localStorage.setItem('sex', res.body.b69)
                 this.$router.push('/')
+                location.reload()
               }
             })
           }, (err) => {

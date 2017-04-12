@@ -7,12 +7,12 @@
     <input type="text" class="contact" placeholder="联系方式：QQ、微信、手机号、邮箱等" v-model="contact" />
     <div class="custom_groom">客服QQ:3350977469<span>(推荐)</span></div>
     <div class="motto_confirm" @click="check(motto,contact)">提交</div>
-    <Toast :isShow="isShow" :text="text" @fadeIn="fadeIn"></Toast>
+    <Toast   :isShow="isShow" :text="text" @fadeIn="fadeIn"></Toast>
   </div>
 </template>
 <script>
     import {transResult} from '../../common/js/transresult'
-    import Toast from '../toast/Toast.vue'
+    import Toast from '../common/Toast.vue'
     export default {
       data () {
         return {

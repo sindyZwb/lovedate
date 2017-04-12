@@ -139,7 +139,7 @@
           <div class="line"></div>
         </div>
         <div class="classify_item loginout clearfix " >
-          <div class="classify_cont classify_cont2  ">
+          <div class="classify_cont classify_cont2" @click="loginout">
             <img class="classify_icon" src="../../assets/images/loginout.png">
             <div class="classify_describe">
               <div class="name name2">退出登录</div>
@@ -156,7 +156,7 @@
 
 <script>
   import Footer from '../footer/Footer.vue'
-  import Albulmbig from '../albulmbig/Albulmbig.vue'
+  import Albulmbig from '../common/Albulmbig.vue'
   import {transResult} from '../../common/js/transresult'
   export default {
     props: {
@@ -195,6 +195,9 @@
       },
       delImg () {
         console.log('del')
+      },
+      loginout () {
+        this.$router.push('/login')
       }
     },
     created () {
@@ -270,6 +273,7 @@
 /* page_profile */
 .page_profile{
 	font-size: 0;
+  padding-bottom: .98rem;
 }
 .profile_header{
 	height: 2.8rem;

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="header_back">
+          <img src="../../assets/images/back.png">
+        </div>
         <ul class="person_lists visiter_list" >
             <li class="person_item" :data-id="item.b80" v-for="item in visiterList" >
                 <router-link v-bind:to="{path: 'detail', query: {id: item.b80, isrobot: item.b216}}">
@@ -9,7 +12,7 @@
                           <div class="name" :class="{name_huangguan: item.b144 == 1}">
                               <span>{{item.b52}}</span><img src="../../assets/images/huangguan.png" v-if="item.b144 == 1"  />
                           </div>
-                          <div class="info">{{item.b1 ? item.b1 + "岁": ''}} {{item.b1 && item.b33 ? "|" : ''}} {{item.b33 ? item.b33 + 'cm' : ''}}{{(item.b67 || item.b9) && (item.b1 || item.b33) ? " | " : ""}}{{item.b67 | filterProvince}} {{item.b9 | filterCity}} </div>
+                          <div class="info">{{item.b1 ? item.b1 + "岁": ''}} {{item.b1 && item.b33 ? "|" : ''}} {{item.b33 ? item.b33 + 'cm' : ''}}{{(item.b67 || item.b9) && (item.b1 || item.b33) ? " | " : ""}}{{item.b67 | filterProvince}} {{item.b9 | filterCity(item.b67)}} </div>
                           <div class="time">到访时间：<span>{{item.b16 ? item.b16 : ''}}</span></div>
                       </div>
                       <img class="right" src="../../assets/images/right.png">

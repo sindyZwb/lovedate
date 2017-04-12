@@ -14,6 +14,8 @@ import Information from '../components/profile/Information'
 import Feedback from '../components/profile/Feedback'
 import About from '../components/profile/About'
 import Profilephone from '../components/profile/Profilephone'
+import Profilevipprovilege from '../components/profile/Profilevipprovilege'
+import Profilefriendcondition from '../components/profile/Profilefriendcondition'
 
 Vue.use(Router)
 
@@ -93,6 +95,16 @@ export default new Router({
       path: '/profilephone',
       name: 'profilephone',
       component: Profilephone
+    },
+    {
+      path: '/profilevipprovilege',
+      name: 'profilevipprovilege',
+      component: Profilevipprovilege
+    },
+    {
+      path: '/profilefriendcondition',
+      name: 'profilefriendcondition',
+      component: Profilefriendcondition
     }
   ]
 })

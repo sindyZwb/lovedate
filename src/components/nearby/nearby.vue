@@ -109,11 +109,12 @@
 
 <style>
 /* page_nearby */
-.page_nearby,.page_recommend{
+.page_nearby{
 	font-size: 0;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box; /* Firefox */
 	-webkit-box-sizing:border-box;
+  padding-bottom: .98rem;
 }
 .page_nearby .nearby_info{
 	font-size: 0.3rem;

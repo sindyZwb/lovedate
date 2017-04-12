@@ -12,10 +12,12 @@
             <input class="varify_num" type="tel" name="code" v-model="code" placeholder="请输入验证码">
             <div class="next" @click="varifyCode(phone, code)">完成</div>
         </div>
+        <Toast :isShow="isShow" :text="text" @fadeIn="fadeIn"></Toast>
     </div>
 </template>
 <script>
   import {transResult} from '../../common/js/transresult'
+  import Toast from '../common/Toast.vue'
   export default {
     data () {
       return {
@@ -23,8 +25,13 @@
         code: '',
         isSend: false,
         codeText: '获取验证码',
-        time: 30
+        time: 30,
+        isShow: false,
+        text: ''
       }
+    },
+    components: {
+      Toast
     },
     methods: {
       judgePhone (phoneNum) {
@@ -33,6 +40,9 @@
         } else {
           return false
         }
+      },
+      fadeIn () {
+        this.isShow = false
       },
       checkPhone (phone) {
         if (phone.trim() !== '' && this.judgePhone(phone) && !this.isSend) {
@@ -48,6 +58,8 @@
           }, 1000)
           this.sendMessage(phone)
         } else {
+          this.isShow = true
+          this.text = '请输入正确手机号'
         }
       },
       sendMessage (phone) {

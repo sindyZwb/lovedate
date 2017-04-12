@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShow" :style="{opacity:opacity}">
+  <div  v-if="isShow"  :style="{opacity:opacity}">
     <div class="hint_box">
       <div class="hint_text">{{text}}</div>
     </div>
