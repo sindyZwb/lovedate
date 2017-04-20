@@ -14,7 +14,7 @@
                 </div>
                 <div class="info">
                   {{item.b1 ? item.b1 + "岁" : ""}}
-                  .
+                  {{item.b1 && item.b33 ? '.' : ''}}
                   {{item.b33 ? item.b33 + "cm" : ""}}
                   </div>
               </div>

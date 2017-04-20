@@ -362,9 +362,9 @@ export default {
         })
     }
   },
-  watch: {
-    '$route': 'fetchData'
-  },
+  // watch: {
+  //   '$route': 'fetchData'
+  // },
   created () {
     this.fetchData()
   }

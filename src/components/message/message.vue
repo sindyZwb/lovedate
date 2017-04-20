@@ -2,28 +2,32 @@
   <div>
     <div class="page page_message mesage_person_list">
       <ul v-if="messagePersonList && messagePersonList.length > 0">
-        <li class="person_item" v-for="item in messagePersonList" :data-id="item.b77"  :data-robot="item.b216 == 1 ? true : false">
-          <router-link v-bind:to="{path: 'detail', query: {id: item.b77, isrobot: item.b216}}">
-            <div class="line_box_wrrap">
-              <div class="line_box_Margin_left">
-                <div class="box">
-                  <img class="head_img" :src="item.b57">
-                  <div class="content">
-                    <div class="name" :class="{name_huangguan:item.b144 == 1}">{{item.b52}}<img src="../../assets/images/huangguan.png" v-if="item.b144 == 1"></div>
-                    <div class="info">
-                    {{item.b78 == 5001 ? "[图片]" : item.b78 == 5005 ? "[私密照]" : item.b78 == 5003 ? "[语音]" : item.b50}}
+          <Sliderdelete :sliderConf="sliderConf" v-for="item in messagePersonList" >
+            <li class="person_item" :data-id="item.b77"  :data-robot="item.b216 == 1 ? true : false">
+                <div>
+                  <router-link v-bind:to="{path: 'detail', query: {id: item.b77, isrobot: item.b216}}">
+                    <div class="line_box_wrrap">
+                      <div class="line_box_Margin_left">
+                        <div class="box">
+                          <img class="head_img" :src="item.b57">
+                          <div class="content">
+                            <div class="name" :class="{name_huangguan:item.b144 == 1}">{{item.b52}}<img src="../../assets/images/huangguan.png" v-if="item.b144 == 1"></div>
+                            <div class="info">
+                            {{item.b78 == 5001 ? "[图片]" : item.b78 == 5005 ? "[私密照]" : item.b78 == 5003 ? "[语音]" : item.b50}}
+                            </div>
+                          </div>
+                          <div class="status">
+                            <div class="time">{{item.b16}}</div>
+                          </div>
+                        </div>
+                        <div class="border"></div>
+                      </div>
+                      <div class="line_box_Del">删除</div>
                     </div>
-                  </div>
-                  <div class="status">
-                    <div class="time">{{item.b16}}</div>
-                  </div>
+                  </router-link>
                 </div>
-                <div class="border"></div>
-              </div>
-              <div class="line_box_Del">删除</div>
-            </div>
-          </router-link>
-        </li>
+            </li>
+        </Sliderdelete>
       </ul>
       <div class="message_none" v-else-if="messagePersonList.length < 0 && !loading">
         <img src="../../assets/images/message_none.png">
@@ -37,9 +41,11 @@
 <script type="text/ecmascript-6">
   import Footer from '../footer/Footer.vue'
   import {transResult} from '../../common/js/transresult'
+  import Sliderdelete from '../common/Sliderdelete'
   export default {
     components: {
-      'v-footer': Footer
+      'v-footer': Footer,
+      Sliderdelete
     },
     props: {
       footerindex: {
@@ -49,7 +55,10 @@
     data () {
       return {
         'messagePersonList': [],
-        'loading': true
+        'loading': true,
+        'sliderConf': {
+          'distance': 75
+        }
       }
     },
     created () {
@@ -136,130 +145,129 @@
 <style>
 
 .mesage_person_list .person_item{
-	padding-top: 0.2rem;
-    height: 1.5rem;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-     -webkit-box-sizing: border-box;
-     width: 7.3rem;
-     overflow: hidden; 
+  padding-top: 0.2rem;
+  height: 1.5rem;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  width: 7.5rem;
 }
 .mesage_person_list .line_box_wrrap{
-	width: 8.8rem;
+  width: 9rem;
 }
 .mesage_person_list .line_box_Margin_left{
-	width: 7.3rem;
-	float: left;
-	position: relative;
-	/*background: yellow;*/
+  width: 7.5rem;
+  float: left;
+  position: relative;
+  /*background: yellow;*/
 }
 .line_box_Del{
-	font-size: 0.32rem;
-    width: 1.5rem;
-    background: red;
-    float: left;
-    line-height: 1.26rem;
-    text-align: center;
-    color: #fff;
+  font-size: 0.32rem;
+  width: 1.5rem;
+  background: red;
+  float: left;
+  line-height: 1.26rem;
+  text-align: center;
+  color: #fff;
 }
 /*********************************************/
 .mesage_person_list .person_item{
-	padding-top: 0.2rem;
-    height: 1.4rem;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box; 
-    position: relative;
+  padding-top: 0.2rem;
+  height: 1.4rem;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; 
+  position: relative;
 }
 .mesage_person_list .box{
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .mesage_person_list .head_img{
-	width: 1rem;
-	height: 1rem;
-	border-radius: 0.1rem;
-	/*display: inline-block;*/
-	/*vertical-align: top;*/
-	float: left;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.1rem;
+  /*display: inline-block;*/
+  /*vertical-align: top;*/
+  float: left;
   margin-left: .2rem;
 }
 .mesage_person_list .content{
-	margin-left: 0.2rem;
-	margin-top: 0.1rem;
-	color: #ffffff;
-	float: left;
-	width: 4rem;
-	overflow: hidden;
-	height: .93rem;
+  margin-left: 0.2rem;
+  margin-top: 0.1rem;
+  color: #ffffff;
+  float: left;
+  width: 4rem;
+  overflow: hidden;
+  height: .93rem;
 }
 .mesage_person_list .name{
-	font-size: 0.32rem;
-	height: .32rem;
+  font-size: 0.32rem;
+  height: .32rem;
   margin-top: 0;
 }
 .mesage_person_list .info{
-    margin-top: 0.2rem;
-    font-size: 0.28rem;
-    height: .5rem;
-    width: 4rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  margin-top: 0.2rem;
+  font-size: 0.28rem;
+  height: .5rem;
+  width: 4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mesage_person_list .status{
-	margin-top: 0.1rem;
-	float: left;
-	position: absolute;
-    right: 0.37rem;
+  margin-top: 0.1rem;
+  float: left;
+  position: absolute;
+  right: 0.37rem;
 }
 .mesage_person_list .time{
-	color: #aaaaaa;
-	font-size: 0.26rem;
+  color: #aaaaaa;
+  font-size: 0.26rem;
 }
 .mesage_person_list .is_read{
-	font-size: 0.26rem;
-	margin-top: 0.2rem;
-	background: #e43f3f;
-	color: #ffffff;
-	text-align: center;
-	height: 0.36rem;
-	line-height: 0.36rem;
-	border-radius: 0.1rem;
+  font-size: 0.26rem;
+  margin-top: 0.2rem;
+  background: #e43f3f;
+  color: #ffffff;
+  text-align: center;
+  height: 0.36rem;
+  line-height: 0.36rem;
+  border-radius: 0.1rem;
 }
 .mesage_person_list .border{
-	margin-left: 1.2rem;
-	margin-top: 0.2rem;
-	border-bottom: 1px solid #3b3142;
+  margin-left: 1.2rem;
+  margin-top: 0.2rem;
+  border-bottom: 1px solid #3b3142;
 }
 .message_none{
-	color: #ffffff;
-	font-size: 0;
+  color: #ffffff;
+  font-size: 0;
 }
 .message_none img{
-	display: block;
-	margin: auto;
-	margin-top: 1.8rem;
-	width: 3.6rem;
-	height: 3.6rem;
+  display: block;
+  margin: auto;
+  margin-top: 1.8rem;
+  width: 3.6rem;
+  height: 3.6rem;
 }
 .message_none .none_hint{
-	font-size: .32rem;
-	text-align: center;
-	margin-top: .38rem;
+  font-size: .32rem;
+  text-align: center;
+  margin-top: .38rem;
 }
 .message_none .fill_btn{
-	font-size: .32rem;
-	width: 3rem;
-	height: .8rem;
-	line-height: .8rem;
-	text-align: center;
-	background: #e43f3f;
-	margin: auto;
-	margin-top: .4rem;
-	border-radius: 2rem;
+  font-size: .32rem;
+  width: 3rem;
+  height: .8rem;
+  line-height: .8rem;
+  text-align: center;
+  background: #e43f3f;
+  margin: auto;
+  margin-top: .4rem;
+  border-radius: 2rem;
 }
 .message_none .fill_btn a{
-	color: #fff;
+  color: #fff;
 }
 </style>

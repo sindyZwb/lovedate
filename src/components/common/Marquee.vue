@@ -11,7 +11,8 @@ export default{
     return {
       height: '',
       length: 0,
-      currentIndex: 0
+      currentIndex: 0,
+      timer: null
     }
   },
   props: {
@@ -79,7 +80,7 @@ export default{
       if (this.direction === 'down') {
         this.quickJump(false)
       }
-      setInterval(() => {
+      this.timer = setInterval(() => {
         if (this.direction === 'up') {
           this.currentIndex += 1
         } else {
@@ -130,12 +131,18 @@ export default{
       * transform同
       */
     setTransition (ele, val) {
+      if (!ele) {
+        return
+      }
       ele.style.transition = val
       ele.style.WebkitTransition = '-webkit-' + val
       ele.style.MozTransition = '-moz-' + val
       ele.style.OTransition = '-o-' + val
     },
     setTransform (ele, val) {
+      if (!ele) {
+        return
+      }
       ele.style.transform = val
       ele.style.WebkitTransform = val
       ele.style.MozTransform = val
